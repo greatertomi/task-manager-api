@@ -1,10 +1,10 @@
-import "reflect-metadata";
-import { createConnection, useContainer } from "typeorm";
-import createSchema from "./schema";
-import { Container } from "typeorm-typedi-extensions";
-import { ApolloServer } from "apollo-server-express";
-import express from "express";
-import cors from "cors";
+import 'reflect-metadata';
+import { createConnection, useContainer } from 'typeorm';
+import { Container } from 'typeorm-typedi-extensions';
+import { ApolloServer } from 'apollo-server-express';
+import express from 'express';
+import cors from 'cors';
+import createSchema from './schema';
 
 useContainer(Container);
 
@@ -27,7 +27,7 @@ const main = async () => {
     app.use(
       cors({
         credentials: true,
-        origin: "http://localhost:3000",
+        origin: 'http://localhost:3000',
       })
     );
 

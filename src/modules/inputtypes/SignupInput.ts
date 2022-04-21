@@ -1,16 +1,11 @@
-import { Field, InputType } from "type-graphql";
+import { Field, InputType } from 'type-graphql';
+import { LoginInput } from './LoginInput';
 
 @InputType()
-export class SignupInput {
+export class SignupInput extends LoginInput {
   @Field()
   public firstName!: string;
 
   @Field()
   public lastName!: string;
-
-  @Field()
-  public email!: string;
-
-  @Field()
-  public password!: string;
 }

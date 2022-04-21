@@ -1,7 +1,7 @@
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
-import { User } from "../../entities/User";
-import { SignupInput } from "../inputtypes/SignupInput";
-import bcrypt from "bcryptjs";
+import bcrypt from 'bcryptjs';
+import { Arg, Mutation, Query, Resolver } from 'type-graphql';
+import { User } from '../../entities/User';
+import { SignupInput } from '../inputtypes/SignupInput';
 
 @Resolver()
 export class UserResolver {
@@ -12,7 +12,7 @@ export class UserResolver {
 
   @Mutation(() => User)
   async signUp(
-    @Arg("data") { firstName, lastName, password, email }: SignupInput
+    @Arg('data') { firstName, lastName, password, email }: SignupInput
   ): Promise<User> {
     const hashPassword = await bcrypt.hash(password, 12);
     return User.create({
@@ -22,4 +22,7 @@ export class UserResolver {
       password: hashPassword,
     }).save();
   }
+
+  // @Mutation(() => User)
+  // async login();
 }
