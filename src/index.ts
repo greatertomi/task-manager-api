@@ -1,10 +1,12 @@
 import "reflect-metadata";
-import { createConnection } from "typeorm";
+import { createConnection, useContainer } from "typeorm";
 import createSchema from "./schema";
 import { Container } from "typeorm-typedi-extensions";
 import { ApolloServer } from "apollo-server-express";
 import express from "express";
 import cors from "cors";
+
+useContainer(Container);
 
 const main = async () => {
   try {
@@ -34,7 +36,9 @@ const main = async () => {
     app.listen(5500, () => {
       console.log(`Server ready at http://localhost:5500${server.graphqlPath}`);
     });
-  } catch (err) {}
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 main();

@@ -1,10 +1,10 @@
-import {buildSchema} from "type-graphql";
-import {SignupResolver} from "./modules/user/Signup";
-import {UserResolver} from "./modules/UserResolver";
+import { buildSchema } from "type-graphql";
+import { TestResolver } from "./modules/user/Signup";
+import { UserResolver } from "./modules/resolvers/UserResolver";
 
 export default (Container: any) => {
   return buildSchema({
     container: Container,
-    resolvers: [SignupResolver, UserResolver]
-  })
-}
+    resolvers: [UserResolver, TestResolver],
+  });
+};
