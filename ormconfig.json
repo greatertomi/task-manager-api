@@ -8,7 +8,7 @@
   "database": "taskmanager",
   "synchronize": true,
   "logger": "advanced-console",
-  "logging": "all",
+  "logging": false,
   "cache": true,
   "dropSchema": false,
   "entities": ["dist/entities/*.js"]
