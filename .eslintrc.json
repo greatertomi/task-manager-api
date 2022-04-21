@@ -29,7 +29,9 @@
         "import/prefer-default-export": "off",
         "indent": "off",
         "class-methods-use-this": "off",
-        "comma-dangle": "off"
+        "comma-dangle": "off",
+        "brace-style": "off",
+        "max-classes-per-file": "off"
     },
     "settings": {
         "import/resolver": {

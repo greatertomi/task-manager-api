@@ -1,0 +1,16 @@
+mutation {
+  login(data: {email: "test@gmail.com", password: "test1"}){
+    ...on LoginSuccess {
+      token
+      user {
+        firstName
+        lastName
+        email
+      }
+    }
+    ...on LoginError {
+      code
+      message
+    }
+  }
+}
