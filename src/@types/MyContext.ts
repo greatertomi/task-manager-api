@@ -1,8 +1,5 @@
-interface AppRequest extends Request {
-  session: any;
-}
-
 export interface MyContext {
-  req: AppRequest;
+  req: Request;
   res: Response;
+  payload?: { userId: string };
 }

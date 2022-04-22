@@ -24,10 +24,10 @@ export const LoginResponse = createUnionType({
   types: () => [LoginSuccess, LoginError] as const,
   resolveType: (value) => {
     if ('token' in value) {
-      return LoginSuccess; // we can return object type class (the one with `@ObjectType()`)
+      return LoginSuccess;
     }
     if ('code' in value) {
-      return LoginError; // or the schema name of the type as a string
+      return LoginError;
     }
     return undefined;
   },

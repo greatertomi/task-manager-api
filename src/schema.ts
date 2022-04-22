@@ -1,6 +1,6 @@
 import { buildSchema } from 'type-graphql';
-import { UserResolver } from './modules/resolvers/UserResolver';
 import { TestResolver } from './modules/user/Signup';
+import { UserResolver } from './resolvers/UserResolver';
 
 export default (Container: any) =>
   buildSchema({

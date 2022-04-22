@@ -1,10 +1,19 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { Arg, Mutation, Query, Resolver } from 'type-graphql';
-import { LoginResponse } from '../../@types/AuthType';
-import { User } from '../../entities/User';
-import { LoginInput } from '../inputtypes/LoginInput';
-import { SignupInput } from '../inputtypes/SignupInput';
+import {
+  Arg,
+  Ctx,
+  Mutation,
+  Query,
+  Resolver,
+  UseMiddleware,
+} from 'type-graphql';
+import { LoginResponse } from '../@types/AuthType';
+import { MyContext } from '../@types/MyContext';
+import { User } from '../entities/User';
+import { isAuth } from '../middlewares/isAuth';
+import { LoginInput } from '../modules/inputtypes/LoginInput';
+import { SignupInput } from '../modules/inputtypes/SignupInput';
 
 @Resolver()
 export class UserResolver {
@@ -47,13 +56,20 @@ export class UserResolver {
 
       const token = jwt.sign(payload, 'Apple', { expiresIn: '10h' });
 
-      // ctx.req.session.userId = user.id;
-      // console.log('token', token);
-
       return { token, user };
     } catch (err) {
       console.error(err);
       return { code: 500, message: 'Server Error' };
     }
+  }
+
+  @Query(() => User)
+  @UseMiddleware(isAuth)
+  async getUser(
+    @Arg('id') id: number,
+    @Ctx() { payload }: MyContext
+  ): Promise<User | undefined> {
+    console.log('getUser', payload);
+    return User.findOne(id);
   }
 }
