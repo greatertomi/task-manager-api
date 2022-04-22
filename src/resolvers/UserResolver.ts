@@ -65,11 +65,13 @@ export class UserResolver {
 
   @Query(() => User)
   @UseMiddleware(isAuth)
-  async getUser(
-    @Arg('id') id: number,
-    @Ctx() { payload }: MyContext
-  ): Promise<User | undefined> {
-    console.log('getUser', payload);
+  async getUser(@Arg('id') id: number): Promise<User | undefined> {
     return User.findOne(id);
+  }
+
+  @Query(() => User)
+  @UseMiddleware(isAuth)
+  async me(@Ctx() { payload }: MyContext) {
+    return User.findOne(payload?.userId);
   }
 }
