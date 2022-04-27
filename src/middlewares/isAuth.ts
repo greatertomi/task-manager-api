@@ -1,6 +1,7 @@
 import { verify } from 'jsonwebtoken';
 import { MiddlewareFn } from 'type-graphql';
 import { MyContext } from '../@types/MyContext';
+import { JWT_KEY } from '../config';
 
 export const isAuth: MiddlewareFn<MyContext> = ({ context }, next) => {
   // @ts-ignore
@@ -12,7 +13,7 @@ export const isAuth: MiddlewareFn<MyContext> = ({ context }, next) => {
 
   try {
     const token = authorization.split(' ')[1];
-    const payload = verify(token, 'Apple');
+    const payload = verify(token, JWT_KEY);
     console.log('isAuth', payload);
     context.payload = payload as any;
   } catch (err) {

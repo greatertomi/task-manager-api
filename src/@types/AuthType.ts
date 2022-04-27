@@ -11,7 +11,7 @@ export class LoginSuccess {
 }
 
 @ObjectType()
-export class LoginError {
+class LoginError {
   @Field()
   code: number;
 

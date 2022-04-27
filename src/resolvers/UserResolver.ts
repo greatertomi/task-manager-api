@@ -8,8 +8,9 @@ import {
   Resolver,
   UseMiddleware,
 } from 'type-graphql';
-import { LoginResponse } from '../@types/AuthType';
+import { LoginResponse, LoginSuccess } from '../@types/AuthType';
 import { MyContext } from '../@types/MyContext';
+import { JWT_KEY } from '../config';
 import { User } from '../entities/User';
 import { isAuth } from '../middlewares/isAuth';
 import { LoginInput } from '../modules/inputtypes/LoginInput';
@@ -22,17 +23,24 @@ export class UserResolver {
     return User.find();
   }
 
-  @Mutation(() => User)
+  @Mutation(() => LoginSuccess)
   async signUp(
     @Arg('data') { firstName, lastName, password, email }: SignupInput
-  ): Promise<User> {
+  ): Promise<LoginSuccess> {
     const hashPassword = await bcrypt.hash(password, 12);
-    return User.create({
+    const user = await User.create({
       firstName,
       lastName,
       email,
       password: hashPassword,
     }).save();
+
+    console.log('fetched', user);
+    const payload = { userId: user.id };
+
+    const token = jwt.sign(payload, JWT_KEY, { expiresIn: '10h' });
+
+    return { token, user };
   }
 
   @Mutation(() => LoginResponse)
@@ -54,7 +62,7 @@ export class UserResolver {
 
       const payload = { userId: user.id };
 
-      const token = jwt.sign(payload, 'Apple', { expiresIn: '10h' });
+      const token = jwt.sign(payload, JWT_KEY, { expiresIn: '10h' });
 
       return { token, user };
     } catch (err) {

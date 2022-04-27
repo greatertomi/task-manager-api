@@ -6,7 +6,7 @@ import { IsEmailAlreadyExist } from '../validators/isEmailAlreadyExist';
 export class SignupInput {
   @Field()
   @IsEmail()
-  @IsEmailAlreadyExist()
+  @IsEmailAlreadyExist({ message: 'This email already exist' })
   email!: string;
 
   @Field()
